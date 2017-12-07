@@ -1,0 +1,11 @@
+# IntelliJ project settings
+/.idea
+
+# virtualenv
+/venv
+
+# python cache
+*.pyc
+
+# database
+db.sqlite3

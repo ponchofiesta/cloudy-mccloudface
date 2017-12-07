@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+
+  django:
+    build: .
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - "8000:8000"
+    environment:
+      - CLOUDY_PORT=8000
