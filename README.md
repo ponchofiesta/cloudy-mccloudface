@@ -23,7 +23,7 @@ Choose between Docker and virtualenv.
 #### Using virtualenv
 
 - Install virtualenv for python:
-  ```bash
+  ```
   apt install python3-pip
   pip3 install virtualenv==15.1.0
   ```
@@ -31,7 +31,7 @@ Choose between Docker and virtualenv.
 ### Set up development environment
 
 - Get source:
-  ```bash
+  ```
   git clone git@gitlab.beuth-hochschule.de:pressanykey/cloudy-mccloudface.git
   cd cloudy-mccloudface
   ```
@@ -43,7 +43,7 @@ No further steps needed.
 #### Using virtualenv
  
 - Set up virtualenv:
-  ```bash
+  ```
   virtualenv -p /usr/bin/python3.5 venv
   ```
 
@@ -57,7 +57,7 @@ Do the steps below and open the project in your web server: http://localhost:800
 
 #### Using virtualenv
 
-  ```bash
+  ```
   source venv/bin/activate
   python manage.py runserver 8000
   ```
@@ -66,14 +66,14 @@ Do the steps below and open the project in your web server: http://localhost:800
 
 #### Using Docker
 
-```bash
+```
 docker-compose exec django npm install
 docker-compose exec django gulp build
 ```
 
 #### Using Virtualenv
 
-```bash
+```
 npm install
 gulp build
 ```
