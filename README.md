@@ -86,4 +86,10 @@ If you're using PyCharm, you need to do these steps.
 - Set python interpreter to use virtualenv or docker-compose.
 - Set a _Run/Debug-Configuration_ for _Django server_ using this interpreter
     - If using docker-compose: Set the _Host_ to _0.0.0.0_ to be able to access the Django server from outside the docker container.
-    
+
+## FAQ
+
+- If you get permission problems when using Docker:
+  - run `bash set-permissions.sh` again
+  
+  
