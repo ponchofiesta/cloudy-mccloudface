@@ -47,6 +47,22 @@ No further steps needed.
   virtualenv -p /usr/bin/python3.5 venv
   ```
 
+### Install dependencies and build assets
+
+#### Using Docker
+
+```
+docker-compose run django npm install
+docker-compose run django gulp build
+```
+
+#### Using Virtualenv
+
+```
+npm install
+gulp build
+```
+
 ## Run environment
 
 Do the steps below and open the project in your web server: http://localhost:8000/.
@@ -61,22 +77,6 @@ Do the steps below and open the project in your web server: http://localhost:800
   source venv/bin/activate
   python manage.py runserver 8000
   ```
-
-### Update dependencies and build assets
-
-#### Using Docker
-
-```
-docker-compose exec django npm install
-docker-compose exec django gulp build
-```
-
-#### Using Virtualenv
-
-```
-npm install
-gulp build
-```
 
 ### PyCharm
 

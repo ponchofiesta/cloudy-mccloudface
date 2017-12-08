@@ -13,6 +13,7 @@ db.sqlite3
 # static content
 /static/*
 !/static/cloudy.css
+!/static/.gitkeep
 
 # dependencies
 /node_modules
