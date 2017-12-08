@@ -9,3 +9,11 @@
 
 # database
 db.sqlite3
+
+# static content
+/static/*
+!/static/cloudy.css
+
+# dependencies
+/node_modules
+/semantic

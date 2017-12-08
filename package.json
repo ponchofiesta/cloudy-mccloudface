@@ -1,0 +1,21 @@
+{
+  "name": "cloudymccloudface",
+  "version": "1.0.0",
+  "description": "Cloudy McCloudface",
+  "main": "index.js",
+  "dependencies": {
+    "gulp-chug": "^0.5.1",
+    "jquery": "^3.1.1",
+    "semantic-ui": "^2.2.13"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.beuth-hochschule.de:pressanykey/cloudy-mccloudface.git"
+  },
+  "author": "",
+  "license": "ISC"
+}

@@ -17,6 +17,8 @@ Choose between Docker and virtualenv.
   https://docs.docker.com/engine/installation/
 - Install docker-compose:
   https://docs.docker.com/compose/install/
+- Set permissions to keep access on docker created items:
+  `bash set-permissions.sh`
 
 #### Using virtualenv
 
@@ -51,7 +53,7 @@ Do the steps below and open the project in your web server: http://localhost:800
 
 ### Using Docker
 
-- `docker-compose up -d`
+- `docker-compose up -d` (the first run may take a while as the image gets build)
 
 #### Using virtualenv
 
@@ -59,6 +61,22 @@ Do the steps below and open the project in your web server: http://localhost:800
   source venv/bin/activate
   python manage.py runserver 8000
   ```
+
+### Update dependencies and build assets
+
+#### Using Docker
+
+```bash
+docker-compose exec django npm install
+docker-compose exec django gulp build
+```
+
+#### Using Virtualenv
+
+```bash
+npm install
+gulp build
+```
 
 ### PyCharm
 
