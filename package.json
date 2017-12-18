@@ -4,6 +4,7 @@
   "description": "Cloudy McCloudface",
   "main": "index.js",
   "dependencies": {
+    "gulp": "^3.9.1",
     "gulp-chug": "^0.5.1",
     "jquery": "^3.1.1",
     "semantic-ui": "^2.2.13"
