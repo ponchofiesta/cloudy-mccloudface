@@ -8,7 +8,9 @@
 </head>
 <body>
     <main class="ui page container">
-		{% block content %}{% endblock %}
+
+        {% block base_content %}{% endblock %}
+
 	</main>
     <script src="{% static "jquery/jquery.js" %}"></script>
     <script src="{% static "semantic/semantic.js" %}"></script>

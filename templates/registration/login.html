@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Cloudy McCloudface{% endblock %}
+
+{% block base_content %}
+
+{% if form.errors %}
+    <p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+
+{% if next %}
+    {% if user.is_authenticated %}
+        <p>Your account doesn't have access to this page. To proceed,
+            please login with an account that has access.</p>
+    {% else %}
+        <p>Please login to see this page.</p>
+    {% endif %}
+{% endif %}
+
+<form class="ui form" method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+
+    <div class="field">
+        <label>{{ form.username.label_tag }}</label>
+        <td>{{ form.username }}</td>
+    </div>
+    <div class="field">
+        <td>{{ form.password.label_tag }}</td>
+        <td>{{ form.password }}</td>
+    </div>
+    <input type="hidden" name="next" value="{{ next }}" />
+    <div class="field">
+        <button class="ui button" type="submit">
+            <i class="sign in icon"></i> Login
+        </button>
+    </div>
+</form>
+
+{% endblock %}

@@ -21,4 +21,5 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('', include('cloudy.urls')),
     path('admin/', admin.site.urls),
+    path(r'accounts/', include('django.contrib.auth.urls')),
 ]

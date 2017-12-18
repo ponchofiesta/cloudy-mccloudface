@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Cloudy McCloudface{% endblock %}
+
+{% block base_content %}
+    {% if user.is_authenticated %}
+
+        <div class="ui secondary menu">
+            <div class="right menu">
+                <div class="item">
+                    <div class="ui icon input">
+                        <input type="text" placeholder="Search...">
+                        <i class="search link icon"></i>
+                    </div>
+                </div>
+                <a class="item" href="{% url 'logout'%}?next={{request.path}}">
+                    <i class="sign out icon"></i> Logout
+                </a>
+            </div>
+        </div>
+
+        <div class="ui row">
+            {% block content %}{% endblock %}
+        </div>
+
+    {% else %}
+
+        <div class="ui vertical masthead center aligned segment">
+
+            <div class="ui text container">
+                <h1 class="ui header">
+                    Cloudy McCloudface
+                </h1>
+                <h2>Hier kommen tolle Inhalte.</h2>
+                <a class="ui primary button" href="{% url 'login'%}">Login</a>
+            </div>
+
+        </div>
+
+    {% endif %}
+{% endblock %}
