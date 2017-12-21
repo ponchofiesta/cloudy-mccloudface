@@ -4,9 +4,17 @@
 
 {% block base_content %}
 
-{% if form.errors %}
-    <p>Your username and password didn't match. Please try again.</p>
-{% endif %}
+    <style type="text/css">
+        body {
+            background-color: #DADADA;
+        }
+        main, body .grid {
+            height: 100%;
+        }
+        .column {
+            max-width: 450px;
+        }
+    </style>
 
 {% if next %}
     {% if user.is_authenticated %}
@@ -17,23 +25,43 @@
     {% endif %}
 {% endif %}
 
-<form class="ui form" method="post" action="{% url 'login' %}">
-    {% csrf_token %}
+    <div class="ui middle aligned center aligned grid">
+        <div class="column">
+            <h2 class="ui teal image header">
+                <div class="content">
+                    Log-in to your account
+                </div>
+            </h2>
+            <form class="ui form" method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                <div class="ui stacked segment">
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="user icon"></i>
+                            <input type="text" name="{{ form.username.html_name }}" placeholder="Username">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="lock icon"></i>
+                            <input type="password" name="{{ form.password.html_name }}" placeholder="Password">
+                        </div>
+                    </div>
+                    <button class="ui fluid large teal submit button">Login</button>
+                </div>
+                <input type="hidden" name="next" value="{{ next }}" />
+            </form>
+            {% if form.errors %}
+                <div class="ui error message">
+                    <p>Your username and password didn't match. Please try again.</p>
+                </div>
+            {% endif %}
+        </div>
 
-    <div class="field">
-        <label>{{ form.username.label_tag }}</label>
-        <td>{{ form.username }}</td>
+
+
+
     </div>
-    <div class="field">
-        <td>{{ form.password.label_tag }}</td>
-        <td>{{ form.password }}</td>
-    </div>
-    <input type="hidden" name="next" value="{{ next }}" />
-    <div class="field">
-        <button class="ui button" type="submit">
-            <i class="sign in icon"></i> Login
-        </button>
-    </div>
-</form>
+
 
 {% endblock %}

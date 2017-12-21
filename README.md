@@ -53,6 +53,7 @@ No further steps needed.
 
 ```
 docker-compose run django npm install
+docker-compose run django npm install gulp -g
 docker-compose run django gulp build
 ```
 
@@ -60,6 +61,7 @@ docker-compose run django gulp build
 
 ```
 npm install
+npm install gulp -g
 gulp build
 ```
 
@@ -69,12 +71,14 @@ Do the steps below and open the project in your web server: http://localhost:800
 
 ### Using Docker
 
+- `docker-compose run django python manage.py migrate`
 - `docker-compose up -d` (the first run may take a while as the image gets build)
 
 #### Using virtualenv
 
   ```
   source venv/bin/activate
+  python manage.py migrate
   python manage.py runserver 8000
   ```
 
