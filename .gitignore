@@ -15,6 +15,9 @@ db.sqlite3
 !/static/cloudy.css
 !/static/.gitkeep
 
+# storage
+/storage/*
+
 # dependencies
 /node_modules
 /semantic

@@ -122,4 +122,4 @@ LOGIN_REDIRECT_URL = '/'
 
 LOGIN_URL = '/accounts/login/'
 
-STORAGE_BASE = 'storage/'
+STORAGE_BASE = 'storage'

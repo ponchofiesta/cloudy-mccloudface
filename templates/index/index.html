@@ -3,19 +3,37 @@
 {% block title %}Cloudy McCloudface{% endblock %}
 
 {% block content %}
-    <div class="ui vertical masthead center aligned segment">
+    <div class="ui segment">
 
-        <div class="ui text container">
-            <h1 class="ui header">
-                Cloudy McCloudface
-            </h1>
-            <h2>Hier kommen tolle Inhalte.</h2>
-            {% for folder in folders %}
-                <div>{{ folder }}</div>
-            {% endfor %}
-            <div>
-
+        <div class="ui segement">Path:
+            <div class="ui horizontal celled selection list">
+                {% for folder in paths %}
+                    <div class="item">
+                        <a href="?path=">
+                            {{ folder }}
+                        </a>
+                    </div>
+                {% endfor %}
             </div>
+        </div>
+
+        <div class="ui middle aligned selection list">
+            {% for item in items %}
+                <div class="item">
+                    {% if item.type == 'dir' %}
+                        <i class="folder icon"></i>
+                    {% else %}
+                        <i class="file icon"></i>
+                    {% endif %}
+                    <div class="content">
+                        <div class="header">
+                            <a href="?path={{ path_str }}/{{ item.name }}">
+                                {{ item.name }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
 
     </div>
