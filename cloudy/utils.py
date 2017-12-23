@@ -1,8 +1,7 @@
 #!/usr/bin/python
 # -*- encoding: utf-8 -*-
 import os
-
-import files
+import pathlib
 
 
 class Storage:
@@ -18,13 +17,11 @@ class Storage:
         items = os.listdir(self.base_path + os.sep + path)
         entries = []
         for item in items:
-            item_path = files.Path(self.base_path + os.sep + item)
-            item_object = item_path.get()
+            item_path = pathlib.Path(self.base_path + os.sep + item)
             entry = {
-                'type': item_path.type(),
-                'paths': files.Path.split(self.base_path + os.sep + item),
-                'path': self.base_path + item,
-                'name': item_object.name
+                'is_dir': item_path.is_dir(),
+                'path': self.base_path + os.sep + item,
+                'name': item
             }
             entries.append(entry)
 

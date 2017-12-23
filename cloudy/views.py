@@ -1,6 +1,6 @@
-import os
+import pathlib
 
-import files
+import os
 from django.shortcuts import render
 
 from cloudy.utils import Storage
@@ -18,9 +18,17 @@ def index(request):
         items = storage.get_items(path)
         vars = {
             'items': items,
-            'paths': files.Path.split(path),
-            'path_str': path
+            'parents': [
+                {
+                    'name': ppath.name,
+                    'path': str(ppath)
+                }
+                for ppath in pathlib.Path(path).parents
+            ],
+            'path': path,
+            'name': os.path.basename(path)
         }
+
         return render(request, 'index/index.html', vars)
     else:
         return render(request, 'index/index.html')
