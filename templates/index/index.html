@@ -3,24 +3,45 @@
 {% block title %}Cloudy McCloudface{% endblock %}
 
 {% block content %}
-    <div>
 
+    <div class="ui vertical segment">
+        <h1 class="ui header">
+            Cloudy McCloudface
+        </h1>
+        <div class="ui hidden divider"></div>
+        <div class="ui right floated secondary menu">
+            <div class="item">
+                <div class="ui icon input">
+                    <input type="text" placeholder="Search...">
+                    <i class="search link icon"></i>
+                </div>
+            </div>
+            <a class="item" href="{% url 'logout'%}?next={{request.path}}">
+                <i class="sign out icon"></i> Logout
+            </a>
+        </div>
+        <a class="ui floating primary button" href="">
+            <i class="cloud upload icon"></i>
+            Upload file
+        </a>
+        <a class="ui primary button" href="">
+            <i class="add icon"></i>
+            New folder
+        </a>
     </div>
 
-    <div class="ui segment">
+    <div class="ui vertical segment">
 
-        <div class="ui segement">
-            <div class="ui large breadcrumb">
-                {% for folder in parents reversed %}
-                    {% if folder.name == '' %}
-                        <a href="?path=" class="section ">My Cloud</a>
-                    {% else %}
-                        <a href="?path={{ folder.path }}" class="section">{{ folder.name }}</a>
-                    {% endif %}
-                    <i class="right angle icon divider"></i>
-                {% endfor %}
-                <div class="active section">{% if name == '' %}My Cloud{% else %}{{ name }}{% endif %}</div>
-            </div>
+        <div class="ui large breadcrumb">
+            {% for folder in parents reversed %}
+                {% if folder.name == '' %}
+                    <a href="?path=" class="section ">My Cloud</a>
+                {% else %}
+                    <a href="?path={{ folder.path }}" class="section">{{ folder.name }}</a>
+                {% endif %}
+                <i class="right angle icon divider"></i>
+            {% endfor %}
+            <div class="active section">{% if name == '' %}My Cloud{% else %}{{ name }}{% endif %}</div>
         </div>
 
         <div class="ui middle aligned selection list">
