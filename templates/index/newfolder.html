@@ -1,0 +1,51 @@
+{% extends "base_menu.html" %}
+
+{% block title %}Cloudy McCloudface{% endblock %}
+
+{% block content %}
+
+    <div class="ui vertical segment">
+        <h1 class="ui header">
+            Cloudy McCloudface
+        </h1>
+        <div class="ui hidden divider"></div>
+        {% include 'menu.html' %}
+    </div>
+
+    <div class="ui vertical segment">
+
+        {% include 'breadcrumb.html' %}
+
+        <h2>Create new folder</h2>
+        <form class="ui form" method="post" action="{% url 'newfolder' %}?path={{ path }}">
+            {% csrf_token %}
+            <div class="field">
+                <label>Folder name</label>
+                <input type="text" name="foldername" placeholder="Folder name">
+            </div>
+            <button class="ui button" type="submit">Create</button>
+            <a class="ui button" href="{% url 'index' %}?path={{ path }}">Cancel</a>
+            <div class="ui error message"></div>
+        </form>
+
+    </div>
+
+    <script type="text/javascript">
+        // form validation via semantic ui
+        $('.ui.form')
+            .form({
+                fields: {
+                    foldername: {
+                        identifier: 'foldername',
+                        rules: [
+                            {
+                                type: 'regExp',
+                                value: /^[\w\-. ]+$/i
+                            }
+                        ]
+                    }
+                }
+            })
+        ;
+    </script>
+{% endblock %}

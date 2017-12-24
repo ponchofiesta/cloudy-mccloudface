@@ -1,0 +1,13 @@
+{% block breadcrumb %}
+<div class="ui large breadcrumb">
+    {% for folder in parents reversed %}
+        {% if folder.name == '' %}
+            <a href="?path=" class="section ">My Cloud</a>
+        {% else %}
+            <a href="?path={{ folder.path }}" class="section">{{ folder.name }}</a>
+        {% endif %}
+        <i class="right angle icon divider"></i>
+    {% endfor %}
+    <div class="active section">{% if name == '' %}My Cloud{% else %}{{ name }}{% endif %}</div>
+</div>
+{% endblock %}

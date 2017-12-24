@@ -26,3 +26,8 @@ class Storage:
             entries.append(entry)
 
         return entries
+
+    def create_folder(self, path, foldername):
+        abs_path = self.base_path + os.sep + path + os.sep + foldername
+        if not os.path.exists(abs_path):
+            os.makedirs(abs_path)
