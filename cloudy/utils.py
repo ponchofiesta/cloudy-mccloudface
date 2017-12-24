@@ -31,3 +31,9 @@ class Storage:
         abs_path = self.base_path + os.sep + path + os.sep + foldername
         if not os.path.exists(abs_path):
             os.makedirs(abs_path)
+
+    def save_file(self, path, file):
+        abs_path = self.base_path + os.sep + path + os.sep + file.name
+        with open(abs_path, 'wb+') as destination:
+            for chunk in file.chunks():
+                destination.write(chunk)

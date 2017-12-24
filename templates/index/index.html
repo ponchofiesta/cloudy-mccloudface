@@ -1,4 +1,4 @@
-{% extends "base_menu.html" %}
+{% extends "base/base_menu.html" %}
 
 {% block title %}Cloudy McCloudface{% endblock %}
 
@@ -9,12 +9,12 @@
             Cloudy McCloudface
         </h1>
         <div class="ui hidden divider"></div>
-        {% include 'menu.html' %}
+        {% include 'base/menu.html' %}
     </div>
 
     <div class="ui vertical segment">
 
-        {% include 'breadcrumb.html' %}
+        {% include 'base/breadcrumb.html' %}
 
         <div class="ui middle aligned selection list">
             {% for item in items %}

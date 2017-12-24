@@ -65,3 +65,30 @@ def newfolder(request):
 
     else:
         return render(request, 'index/index.html')
+
+def upload(request):
+    if request.user.is_authenticated:
+
+        path = request.GET.get('path', default='')
+
+        if request.method == 'GET':
+            vars = {
+                'parents': [
+                    {
+                        'name': ppath.name,
+                        'path': str(ppath)
+                    }
+                    for ppath in pathlib.Path(path).parents
+                ],
+                'path': path,
+                'name': os.path.basename(path)
+            }
+            return render(request, 'index/upload.html', vars)
+
+        elif request.method == 'POST':
+            storage = Storage(settings.STORAGE_BASE, request.user)
+            storage.save_file(path, request.FILES['file'])
+            return redirect(reverse('index') + '?path=' + path)
+
+    else:
+        return render(request, 'index/index.html')
