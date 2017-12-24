@@ -35,6 +35,9 @@ Choose between Docker and virtualenv.
   git clone git@gitlab.beuth-hochschule.de:pressanykey/cloudy-mccloudface.git
   cd cloudy-mccloudface
   ```
+- Set and create storage directory for users:
+  - Create directory where you want
+  - Set this path in STORAGE_BASE in settings.py
 
 #### Using Docker
 
