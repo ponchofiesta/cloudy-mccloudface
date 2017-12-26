@@ -1,3 +1,4 @@
+from datetime import timedelta, datetime
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
@@ -15,6 +16,7 @@ def index(request):
         items = storage.get_items(path)
         params = Storage.get_path_params(path)
         params['items'] = items
+        params['yesterday'] = datetime.now() - timedelta(1)
 
         return render(request, 'index/index.html', params)
     else:
@@ -61,3 +63,13 @@ def upload(request):
         return render(request, 'index/index.html')
 
 
+def download(request):
+    if request.user.is_authenticated:
+
+        path = request.GET.get('path', default='')
+
+        storage = Storage(settings.STORAGE_BASE, request.user)
+        return storage.download_file(path)
+
+    else:
+        return render(request, 'index/index.html')

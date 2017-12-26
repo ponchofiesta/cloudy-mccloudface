@@ -1,5 +1,10 @@
+import mimetypes
 import os
 import pathlib
+
+from datetime import datetime
+
+from django.http import HttpResponse, Http404
 
 
 class Storage:
@@ -15,11 +20,13 @@ class Storage:
         items = os.listdir(self.base_path + os.sep + path)
         entries = []
         for item in items:
-            item_path = pathlib.Path(self.base_path + os.sep + item)
+            item_path = pathlib.Path(self.base_path + os.sep + path + os.sep + item)
             entry = {
                 'is_dir': item_path.is_dir(),
-                'path': self.base_path + os.sep + item,
-                'name': item
+                'path': self.base_path + os.sep + path + os.sep + item,
+                'name': item,
+                'mdate':  datetime.fromtimestamp(item_path.stat().st_mtime),
+                'size': item_path.stat().st_size
             }
             entries.append(entry)
 
@@ -35,6 +42,15 @@ class Storage:
         with open(abs_path, 'wb+') as destination:
             for chunk in file.chunks():
                 destination.write(chunk)
+
+    def download_file(self, path):
+        abs_path = self.base_path + os.sep + path
+        if os.path.exists(abs_path):
+            with open(abs_path, 'rb') as fh:
+                response = HttpResponse(fh.read(), content_type=mimetypes.guess_type(abs_path))
+                response['Content-Disposition'] = 'attachment; filename=' + os.path.basename(abs_path)
+                return response
+        raise Http404
 
     @staticmethod
     def get_path_params(path):

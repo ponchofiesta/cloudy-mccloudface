@@ -1,5 +1,7 @@
 {% extends "base/base_menu.html" %}
 
+{% load humanize %}
+
 {% block title %}Cloudy McCloudface{% endblock %}
 
 {% block content %}
@@ -16,24 +18,49 @@
 
         {% include 'base/breadcrumb.html' %}
 
-        <div class="ui middle aligned selection list">
+        <table class="ui table">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Size</th>
+                <th class="right aligned">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
             {% for item in items %}
-                <div class="item">
+            <tr>
+                <td class="collapsing">
                     {% if item.is_dir %}
                         <i class="folder icon"></i>
                     {% else %}
-                        <i class="file icon"></i>
+                        <i class="file outline icon"></i>
                     {% endif %}
-                    <div class="content">
-                        <div class="header">
-                            <a href="?path={{ path }}/{{ item.name }}">
-                                {{ item.name }}
+                    <a href="?path={{ path }}/{{ item.name }}">
+                        {{ item.name }}
+                    </a>
+                </td>
+                <td>{{ item.mdate|date:"D d M Y, H:s" }}</td>
+                <td>{{ item.size|filesizeformat }}</td>
+                <td>
+                    <div class="ui right floated icon menu">
+                        {% if not item.is_dir %}
+                            <a class="popup icon item" href="{% url 'download' %}?path={{ path }}/{{ item.name }}">
+                                <i class="download icon" data-content="Download" data-position="bottom right"></i>
                             </a>
-                        </div>
+                        {% endif %}
+                        <a class="rename icon item">
+                            <i class="text cursor icon" data-content="Rename" data-position="bottom right"></i>
+                        </a>
+                        <a class="popup icon item">
+                            <i class="trash icon" data-content="Delete" data-position="bottom right"></i>
+                        </a>
                     </div>
-                </div>
+                </td>
+            </tr>
             {% endfor %}
-        </div>
+            </tbody>
+        </table>
 
     </div>
 {% endblock %}
