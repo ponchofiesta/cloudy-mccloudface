@@ -2,9 +2,9 @@
 <div class="ui large breadcrumb">
     {% for folder in parents reversed %}
         {% if folder.name == '' %}
-            <a href="?path=" class="section ">My Cloud</a>
+            <a href="{% url 'index' %}?path=" class="section ">My Cloud</a>
         {% else %}
-            <a href="?path={{ folder.path }}" class="section">{{ folder.name }}</a>
+            <a href="{% url 'index' %}?path={{ folder.path }}" class="section">{{ folder.name }}</a>
         {% endif %}
         <i class="right angle icon divider"></i>
     {% endfor %}
