@@ -37,3 +37,17 @@ class Storage:
         with open(abs_path, 'wb+') as destination:
             for chunk in file.chunks():
                 destination.write(chunk)
+
+    @staticmethod
+    def get_path_params(path):
+        return {
+            'parents': [
+                {
+                    'name': ppath.name,
+                    'path': str(ppath)
+                }
+                for ppath in pathlib.Path(path).parents
+            ],
+            'path': path,
+            'name': os.path.basename(path)
+        }
