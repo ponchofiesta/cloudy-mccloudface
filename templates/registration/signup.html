@@ -1,0 +1,100 @@
+{% extends "base/base.html" %}
+
+{% block title %}Cloudy McCloudface{% endblock %}
+
+{% block base_content %}
+
+    <style type="text/css">
+        body {
+            background-color: #DADADA;
+        }
+
+        main, body .grid {
+            height: 100%;
+        }
+
+        .column {
+            max-width: 450px;
+        }
+    </style>
+
+    {% if next %}
+        {% if user.is_authenticated %}
+            <p>You have registered successfully.</p>
+        {% else %}
+            <p>Please register to use Cloudy McCloudface.</p>
+        {% endif %}
+    {% endif %}
+
+
+    <div class="ui middle aligned center aligned grid">
+        <div class="column">
+            <h2 class="ui teal image header">
+                <div class="content">
+                    Create a new account
+                </div>
+            </h2>
+            <form class="ui form" method="post" action="{% url 'signup' %}">
+                {% csrf_token %}
+                <div class="ui stacked segment">
+
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="user icon"></i>
+                            <input type="text"
+                                   name="{{ form.username.name }}"
+                                   id="{{ form.username.id_for_label }}"
+                                   placeholder="Username"
+                                   maxlength="{{ form.username.field.max_length }}"
+                                   required autofocus>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="lock icon"></i>
+                            <input type="password"
+                                   name="{{ form.password1.name }}"
+                                   id="{{ form.password1.id_for_label }}"
+                                   placeholder="Password with at least 8 characters"
+                                   required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="lock icon"></i>
+                            <input type="password"
+                                   name="{{ form.password2.name }}"
+                                   id="{{ form.password2.id_for_label }}"
+                                   placeholder="Repeat password"
+                                   required>
+                        </div>
+                    </div>
+
+                    <button class="ui fluid large teal submit button">Register</button>
+                </div>
+                <input type="hidden" name="next" value="{{ next }}"/>
+
+
+            </form>
+            {% if form.errors %}
+                <div class="ui error message">
+                    {% for error in form.errors %}
+                        {% if error == "username" %}
+                            <p>This username is already taken.</p>
+                        {% endif %}
+                        {% if error == "password2" %}
+                            <p>Your password is not long enough or there is a typo in you password confirmation.</p>
+                        {% endif %}
+                    {% endfor %}
+                    <p>Please try again.</p>
+                </div>
+            {% endif %}
+        </div>
+
+
+    </div>
+
+
+{% endblock %}

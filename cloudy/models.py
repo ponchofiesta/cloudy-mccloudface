@@ -14,10 +14,11 @@ class Profile(models.Model):
         self.storage_path = self.user.username.lower()
 
 
+
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
-        Profile.objects.create(user=instance)
+        Profile.objects.create(user=instance, storage_path=instance.username.lower())
 
 
 @receiver(post_save, sender=User)
