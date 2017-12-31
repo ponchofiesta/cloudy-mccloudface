@@ -6,61 +6,106 @@
 
 {% block content %}
 
-    <div class="ui vertical segment">
-        <h1 class="ui header">
-            Cloudy McCloudface
-        </h1>
-        <div class="ui hidden divider"></div>
-        {% include 'base/menu.html' %}
-    </div>
+    <style>
+        #details {
+            background-color: whitesmoke;
+        }
 
-    <div class="ui vertical segment">
+        .ten.wide.column {
+            padding-top: 20px !important;
+        }
 
-        {% include 'base/breadcrumb.html' %}
+        button i.icon {
+            margin: 0;
+        }
 
-        <table class="ui table">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Date</th>
-                <th>Size</th>
-                <th class="right aligned">Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for item in items %}
-            <tr>
-                <td class="collapsing">
-                    {% if item.is_dir %}
-                        <i class="folder icon"></i>
-                    {% else %}
-                        <i class="file outline icon"></i>
-                    {% endif %}
-                    <a href="?path={{ path }}/{{ item.name }}">
-                        {{ item.name }}
-                    </a>
-                </td>
-                <td>{{ item.mdate|date:"D d M Y, H:s" }}</td>
-                <td>{{ item.size|filesizeformat }}</td>
-                <td>
-                    <div class="ui right floated icon menu">
-                        {% if not item.is_dir %}
-                            <a class="popup icon item" href="{% url 'download' %}?path={{ path }}/{{ item.name }}">
-                                <i class="download icon" data-content="Download" data-position="bottom right"></i>
-                            </a>
-                        {% endif %}
-                        <a class="rename icon item">
-                            <i class="text cursor icon" data-content="Rename" data-position="bottom right"></i>
-                        </a>
-                        <a class="popup icon item">
-                            <i class="trash icon" data-content="Delete" data-position="bottom right"></i>
-                        </a>
+        button a, button a:hover {
+            color: white;
+        }
+    </style>
+
+    {% include 'base/menu.html' %}
+
+    <div class="ui equal width grid">
+        <div class="stretched row">
+            <div class="ten wide column">
+                <div class="ui two column grid">
+                    <div class="middle aligned thirteen wide column">
+                        {% include 'base/breadcrumb.html' %}
                     </div>
-                </td>
-            </tr>
-            {% endfor %}
-            </tbody>
-        </table>
 
+                    <div class="right floated three wide column">
+                        <div class="large teal ui buttons">
+                            <button class="ui icon button">
+                                <a href="{% url 'upload' %}?path={{ path }}"><i class="file icon"></i></a>
+                            </button>
+                            <button class="ui icon button">
+                                <a href="{% url 'newfolder' %}?path={{ path }}"><i class="folder open icon"></i></a>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="ui vertical segment">
+                    <table class="ui very basic selectable table">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Date</th>
+                            <th>Size</th>
+                            <th class="right aligned">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in items %}
+                            <tr>
+                                <td class="collapsing">
+                                    {% if item.is_dir %}
+                                        <i class="folder icon"></i>
+                                        <a href="?path={{ path }}/{{ item.name }}">
+                                            {{ item.name }}
+                                        </a>
+                                    {% else %}
+                                        <i class="file outline icon"></i>
+                                        {{ item.name }}
+                                    {% endif %}
+
+                                </td>
+                                <td>{{ item.mdate|date:"D d M Y, H:s" }}</td>
+                                <td>{{ item.size|filesizeformat }}</td>
+                                <td>
+                                    <div class="ui right floated icon menu">
+                                        {% if not item.is_dir %}
+                                            <a class="popup icon item"
+                                               href="{% url 'download' %}?path={{ path }}/{{ item.name }}">
+                                                <i class="download icon" data-content="Download"
+                                                   data-position="bottom right"></i>
+                                            </a>
+                                        {% endif %}
+                                        <a class="rename icon item">
+                                            <i class="text cursor icon" data-content="Rename"
+                                               data-position="bottom right"></i>
+                                        </a>
+                                        <a class="popup icon item">
+                                            <i class="trash icon" data-content="Delete"
+                                               data-position="bottom right"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="ui vertical segment" id="details">
+                    Show file details here
+                </div>
+            </div>
+        </div>
     </div>
+
 {% endblock %}

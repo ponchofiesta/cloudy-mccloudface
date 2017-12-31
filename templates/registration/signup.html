@@ -6,7 +6,7 @@
 
     <style type="text/css">
         body {
-            background-color: #DADADA;
+            background-image: radial-gradient(white, rgba(0, 128, 128, 0.56));
         }
 
         main, body .grid {
@@ -36,7 +36,7 @@
             </h2>
             <form class="ui form" method="post" action="{% url 'signup' %}">
                 {% csrf_token %}
-                <div class="ui stacked segment">
+                <div class="ui raised piled segment">
 
                     <div class="field">
                         <div class="ui left icon input">

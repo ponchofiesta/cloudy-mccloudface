@@ -6,8 +6,6 @@ from django.contrib.auth.forms import UserCreationForm
 
 from cloudy.utils import Storage
 from cloudymccloudface import settings
-from cloudy.models import Profile
-
 
 def signup(request):
     if request.method == 'POST':

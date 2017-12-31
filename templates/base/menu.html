@@ -1,19 +1,24 @@
-<div class="ui right floated secondary menu">
+<div class="ui top fixed menu">
+
     <div class="item">
-        <div class="ui icon input">
-            <input type="text" placeholder="Search...">
+        <h4 class="ui teal header">
+            <img class="ui tiny image" src="/static/cloud.png">
+            <div class="content">
+                Cloudy McCloudface
+            </div>
+        </h4>
+    </div>
+
+    <div class="ui category search item">
+        <div class="ui transparent icon input">
+            <input class="prompt" type="text" placeholder="Search files...">
             <i class="search link icon"></i>
         </div>
+        <div class="results"></div>
     </div>
-    <a class="item" href="{% url 'logout' %}?next={{request.path}}">
+
+    <a class="right item" href="{% url 'logout' %}?next={{ request.path }}">
         <i class="sign out icon"></i> Logout
     </a>
+
 </div>
-<a class="ui floating primary button" href="{% url 'upload' %}?path={{ path }}">
-    <i class="cloud upload icon"></i>
-    Upload file
-</a>
-<a class="ui primary button" href="{% url 'newfolder' %}?path={{ path }}">
-    <i class="add icon"></i>
-    New folder
-</a>

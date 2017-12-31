@@ -9,17 +9,68 @@
 
     {% else %}
 
-        <div class="ui vertical masthead center aligned segment">
+        <style>
+            body {
+                background-image: radial-gradient(white, rgba(0, 128, 128, 0.56));
+            }
 
-            <div class="ui text container">
-                <h1 class="ui header">
-                    Cloudy McCloudface
-                </h1>
-                <h2>Hier kommen tolle Inhalte.</h2>
-                <a class="ui primary button" href="{% url 'login'%}">Login</a>
-                <a class="ui primary button" href="{% url 'signup' %}">Register</a>
+            main, body .grid {
+                height: 100%;
+            }
+
+            .column {
+                max-width: 450px;
+            }
+
+            a, a:hover {
+                color: teal;
+            }
+        </style>
+
+        <div class="ui middle aligned center aligned grid">
+            <div class="column">
+                <div class="ui raised piled segment">
+                    <div class="ui vertically divided grid">
+
+                        <div class="one column row">
+                            <div class="column">
+                                <img class="ui image" src="/static/cloud_space.png">
+                                <h1 class="ui header centered">
+                                    <div class="content">
+                                        Cloudy McCloudface
+                                        <div class="sub header">Your super friendly file cloud</div>
+                                    </div>
+                                </h1>
+                            </div>
+                        </div>
+
+
+                        <div class="two column row">
+                            <div class="column">
+                                <div class="fluid ui animated fade teal basic huge button" tabindex="0">
+                                    <div class="visible content">
+                                        Login
+                                    </div>
+                                    <div class="hidden content">
+                                        <a href="{% url 'login' %}"><i class="sign in icon"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="column">
+                                <div class="fluid ui animated fade teal basic huge button" tabindex="0">
+                                    <div class="visible content">
+                                        Register
+                                    </div>
+                                    <div class="hidden content">
+                                        <a href="{% url 'signup' %}"><i class="send outline icon"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-
         </div>
 
     {% endif %}
