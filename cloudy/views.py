@@ -30,6 +30,8 @@ def index(request):
         storage = Storage(settings.STORAGE_BASE, request.user)
         items = storage.get_items(path)
         params = Storage.get_path_params(path)
+        details = storage.get_file_details(path)
+        params['details'] = details
         params['items'] = items
         params['yesterday'] = datetime.now() - timedelta(1)
 

@@ -9,6 +9,7 @@
     <style>
         #details {
             background-color: whitesmoke;
+            padding: 2em 1em;
         }
 
         .ten.wide.column {
@@ -21,6 +22,10 @@
 
         button a, button a:hover {
             color: white;
+        }
+
+        tr.details {
+            cursor: pointer;
         }
     </style>
 
@@ -52,33 +57,25 @@
                         <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Date</th>
-                            <th>Size</th>
                             <th class="right aligned">Actions</th>
                         </tr>
                         </thead>
                         <tbody>
                         {% for item in items %}
-                            <tr>
+                            <tr class="details" id="{{ item.webpath }}">
                                 <td class="collapsing">
                                     {% if item.is_dir %}
                                         <i class="folder icon"></i>
-                                        <a href="?path={{ path }}/{{ item.name }}">
-                                            {{ item.name }}
-                                        </a>
                                     {% else %}
                                         <i class="file outline icon"></i>
-                                        {{ item.name }}
                                     {% endif %}
-
+                                    {{ item.name }}
                                 </td>
-                                <td>{{ item.mdate|date:"D d M Y, H:s" }}</td>
-                                <td>{{ item.size|filesizeformat }}</td>
                                 <td>
                                     <div class="ui right floated icon menu">
                                         {% if not item.is_dir %}
                                             <a class="popup icon item"
-                                               href="{% url 'download' %}?path={{ path }}/{{ item.name }}">
+                                               href="{% url 'download' %}?path={{ item.webpath }}">
                                                 <i class="download icon" data-content="Download"
                                                    data-position="bottom right"></i>
                                             </a>
@@ -102,10 +99,24 @@
 
             <div class="column">
                 <div class="ui vertical segment" id="details">
-                    Show file details here
+                    {% include 'index/details.html' %}
                 </div>
             </div>
         </div>
     </div>
+
+    <script type="text/javascript">
+        // Mark selected file
+        $(function () {
+            var pathname = window.location.href;
+            pathname = pathname.split('?path=');
+            pathname = pathname[1].trim();
+            $(document.getElementById(pathname)).addClass('active');
+        });
+
+        $('.details').click(function () {
+            location.href = "?path=" + this.id;
+        });
+    </script>
 
 {% endblock %}

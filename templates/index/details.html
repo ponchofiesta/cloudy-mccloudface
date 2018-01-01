@@ -1,0 +1,12 @@
+{% block details %}
+    {% if details.is_file %}
+        <h2 class="ui sub header">File name</h2>
+        <span>{{ details.name }}</span>
+        <h2 class="ui sub header">File size</h2>
+        <span>{{ details.size|filesizeformat }}</span>
+        <h2 class="ui sub header">Last modified</h2>
+        <span>{{ details.mdate|date:"D d M Y, H:s" }}</span>
+    {% else %}
+        <p>No file selected</p>
+    {% endif %}
+{% endblock %}

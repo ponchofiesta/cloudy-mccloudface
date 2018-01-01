@@ -17,20 +17,37 @@ class Storage:
             os.makedirs(self.base_path)
 
     def get_items(self, path=''):
-        items = os.listdir(self.base_path + os.sep + path)
+        if os.path.isfile(self.base_path + os.sep + path):
+            path = path.rsplit('/', 1)
+            path = path[0]
         entries = []
+        items = os.listdir(self.base_path + os.sep + path)
         for item in items:
             item_path = pathlib.Path(self.base_path + os.sep + path + os.sep + item)
             entry = {
                 'is_dir': item_path.is_dir(),
                 'path': self.base_path + os.sep + path + os.sep + item,
+                'webpath': path + os.sep + item,
                 'name': item,
-                'mdate':  datetime.fromtimestamp(item_path.stat().st_mtime),
+                'mdate': datetime.fromtimestamp(item_path.stat().st_mtime),
                 'size': item_path.stat().st_size
             }
             entries.append(entry)
 
         return entries
+
+    def get_file_details(self, path=''):
+        details = {}
+        if os.path.isfile(self.base_path + os.sep + path):
+            item_path = pathlib.Path(self.base_path + os.sep + path)
+            details = {
+                'is_file': True,
+                'name': path.rsplit('/', 1)[1],
+                'size': item_path.stat().st_size,
+                'mdate': datetime.fromtimestamp(item_path.stat().st_mtime),
+                'text': "Das ist Text"
+            }
+        return details
 
     def create_folder(self, path, foldername):
         abs_path = self.base_path + os.sep + path + os.sep + foldername
