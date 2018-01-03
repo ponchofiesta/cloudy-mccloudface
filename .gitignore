@@ -13,6 +13,8 @@ db.sqlite3
 # static content
 /static/*
 !/static/cloudy.css
+!/static/cloud.png
+!/static/cloud_space.png
 !/static/.gitkeep
 
 # storage
