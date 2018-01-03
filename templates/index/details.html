@@ -1,7 +1,18 @@
+{% load staticfiles %}
+
 {% block details %}
+
     {% if details.is_file %}
+        {% if 'image' in details.type %}
+            <h2 class="ui sub header">Preview</h2>
+            <span>
+                <img class="ui float image" src="data:{{ details.type }};base64, {{ details.data }}" alt="Image"/>
+            </span>
+        {% endif %}
         <h2 class="ui sub header">File name</h2>
         <span>{{ details.name }}</span>
+        <h2 class="ui sub header">File type</h2>
+        <span>{{ details.type }}</span>
         <h2 class="ui sub header">File size</h2>
         <span>{{ details.size|filesizeformat }}</span>
         <h2 class="ui sub header">Last modified</h2>
@@ -9,4 +20,5 @@
     {% else %}
         <p>No file selected</p>
     {% endif %}
+
 {% endblock %}

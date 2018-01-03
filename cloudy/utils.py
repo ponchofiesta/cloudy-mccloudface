@@ -1,10 +1,12 @@
-import mimetypes
 import os
 import pathlib
+import mimetypes
+import base64
 
 from datetime import datetime
 
 from django.http import HttpResponse, Http404
+from django.conf import settings
 
 
 class Storage:
@@ -40,12 +42,15 @@ class Storage:
         details = {}
         if os.path.isfile(self.base_path + os.sep + path):
             item_path = pathlib.Path(self.base_path + os.sep + path)
+            with open((self.base_path + os.sep + path), "rb") as file:
+                encoded_string = base64.b64encode(file.read()).decode('ascii')
             details = {
                 'is_file': True,
+                'type': mimetypes.guess_type(path)[0],
                 'name': path.rsplit('/', 1)[1],
                 'size': item_path.stat().st_size,
                 'mdate': datetime.fromtimestamp(item_path.stat().st_mtime),
-                'text': "Das ist Text"
+                'data': encoded_string
             }
         return details
 
