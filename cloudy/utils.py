@@ -6,7 +6,6 @@ import base64
 from datetime import datetime
 
 from django.http import HttpResponse, Http404
-from django.conf import settings
 
 
 class Storage:
