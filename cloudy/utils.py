@@ -41,14 +41,17 @@ class Storage:
         details = {}
         if os.path.isfile(self.base_path + os.sep + path):
             item_path = pathlib.Path(self.base_path + os.sep + path)
+            item_type = mimetypes.guess_type(path)[0]
             with open((self.base_path + os.sep + path), "rb") as file:
                 encoded_string = base64.b64encode(file.read()).decode('ascii')
-            f = open(self.base_path + os.sep + path)
-            text = f.read()
-            f.close()
+            text = ''
+            if 'text' in item_type:
+                f = open(self.base_path + os.sep + path)
+                text = f.read()
+                f.close()
             details = {
                 'is_file': item_path.is_file(),
-                'type': mimetypes.guess_type(path)[0],
+                'type': item_type,
                 'name': path.rsplit('/', 1)[1],
                 'size': item_path.stat().st_size,
                 'mdate': datetime.fromtimestamp(item_path.stat().st_mtime),
