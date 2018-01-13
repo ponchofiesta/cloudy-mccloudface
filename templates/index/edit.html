@@ -1,0 +1,45 @@
+{% extends "base/base_menu.html" %}
+
+{% block title %}Cloudy McCloudface{% endblock %}
+
+{% block content %}
+
+    <div class="ui vertical segment">
+        <h1 class="ui header">
+            Cloudy McCloudface
+        </h1>
+        <div class="ui hidden divider"></div>
+        {% include 'base/menu.html' %}
+    </div>
+
+    <div class="ui vertical segment">
+
+        {% include 'base/breadcrumb.html' %}
+
+        {% if details.is_file %}
+            <h2>Edit file</h2>
+        {% else %}
+            <h2>Edit directory</h2>
+        {% endif %}
+        <form class="ui form" method="post" enctype="multipart/form-data" action="{% url 'edit' %}?path={{ path }}">
+            {% csrf_token %}
+
+            {% if details.is_file %}
+                <div class="field">
+                    <label>{{ details.name }}</label>
+                    <textarea name="filecontent">{{ details.text }}</textarea>
+                </div>
+
+            {% else %}
+                <p>Ist ein Verzeichnis</p>
+            {% endif %}
+
+            <button class="ui primary button" type="submit">Save</button>
+            <a class="ui button" href="{% url 'index' %}?path={{ path }}">Cancel</a>
+            <div class="ui error message"></div>
+        </form>
+
+    </div>
+
+
+{% endblock %}

@@ -80,11 +80,15 @@
                                                    data-position="bottom right"></i>
                                             </a>
                                         {% endif %}
-                                        <a class="rename icon item">
-                                            <i class="text cursor icon" data-content="Rename"
-                                               data-position="bottom right"></i>
-                                        </a>
-                                        <a class="popup icon item">
+                                        {% if 'image' not in item.type or item.is_dir %}
+                                            <a class="rename icon item"
+                                               href="{% url 'edit' %}?path={{ item.webpath }}">
+                                                <i class="write icon" data-content="Rename"
+                                                   data-position="bottom right"></i>
+                                            </a>
+                                        {% endif %}
+                                        <a class="popup icon item"
+                                           href="{% url 'delete' %}?path={{ item.webpath }}">
                                             <i class="trash icon" data-content="Delete"
                                                data-position="bottom right"></i>
                                         </a>

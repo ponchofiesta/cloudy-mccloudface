@@ -31,8 +31,7 @@ class Storage:
                 'path': self.base_path + os.sep + path + os.sep + item,
                 'webpath': path + os.sep + item,
                 'name': item,
-                'mdate': datetime.fromtimestamp(item_path.stat().st_mtime),
-                'size': item_path.stat().st_size
+                'type': mimetypes.guess_type(path + os.sep + item)[0]
             }
             entries.append(entry)
 
@@ -44,13 +43,17 @@ class Storage:
             item_path = pathlib.Path(self.base_path + os.sep + path)
             with open((self.base_path + os.sep + path), "rb") as file:
                 encoded_string = base64.b64encode(file.read()).decode('ascii')
+            f = open(self.base_path + os.sep + path)
+            text = f.read()
+            f.close()
             details = {
-                'is_file': True,
+                'is_file': item_path.is_file(),
                 'type': mimetypes.guess_type(path)[0],
                 'name': path.rsplit('/', 1)[1],
                 'size': item_path.stat().st_size,
                 'mdate': datetime.fromtimestamp(item_path.stat().st_mtime),
-                'data': encoded_string
+                'data': encoded_string,
+                'text': text
             }
         return details
 
@@ -64,6 +67,14 @@ class Storage:
         with open(abs_path, 'wb+') as destination:
             for chunk in file.chunks():
                 destination.write(chunk)
+
+    def update_file(self, path, content):
+        abs_path = self.base_path + os.sep + path
+        f = open(abs_path, 'r+')
+        f.seek(0)
+        f.write(content)
+        f.close()
+
 
     def download_file(self, path):
         abs_path = self.base_path + os.sep + path
