@@ -90,3 +90,17 @@ def download(request):
 
     else:
         return render(request, 'index/index.html')
+
+
+def delete(request):
+    if request.user.is_authenticated:
+
+        path = request.GET.get('path', default='')
+
+        storage = Storage(settings.STORAGE_BASE, request.user)
+        storage.delete_file(path)
+        parentDir = path.rsplit('/', 1)[0]
+        return redirect(reverse('index') + '?path=' + parentDir)
+
+    else:
+        return render(request, 'index/index.html')

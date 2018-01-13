@@ -4,6 +4,7 @@ import mimetypes
 import base64
 
 from datetime import datetime
+from shutil import rmtree
 
 from django.http import HttpResponse, Http404
 
@@ -72,6 +73,14 @@ class Storage:
                 response['Content-Disposition'] = 'attachment; filename=' + os.path.basename(abs_path)
                 return response
         raise Http404
+
+    def delete_file(self, path):
+        abs_path = self.base_path + os.sep + path
+        if os.path.exists(abs_path):
+            if os.path.isfile(abs_path):
+                os.remove(abs_path)
+            else:
+                rmtree(abs_path)
 
     @staticmethod
     def get_path_params(path):
