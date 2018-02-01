@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
-from cloudy.models import Profile
+from cloudy.models import Profile, Share
 
 
 # Register your models here.
@@ -13,8 +13,9 @@ class ProfileInline(admin.StackedInline):
     verbose_name_plural = 'Profile'
     fk_name = 'user'
 
+
 class CustomUserAdmin(UserAdmin):
-    inlines = (ProfileInline, )
+    inlines = (ProfileInline,)
 
     def get_inline_instances(self, request, obj=None):
         if not obj:
@@ -24,3 +25,4 @@ class CustomUserAdmin(UserAdmin):
 
 admin.site.unregister(User)
 admin.site.register(User, CustomUserAdmin)
+admin.site.register(Share)

@@ -10,6 +10,8 @@ from django.http import HttpResponse, Http404
 
 
 class Storage:
+    base_path = ''
+
     def __init__(self, base_path, user):
         self.base_path = base_path + os.sep + user.profile.storage_path
         self.user = user
@@ -17,6 +19,9 @@ class Storage:
         # create users storage folder if not exists
         if not os.path.exists(self.base_path):
             os.makedirs(self.base_path)
+
+    def set_base_path(self, base_path):
+        self.base_path = base_path
 
     def get_items(self, path=''):
         if os.path.isfile(self.base_path + os.sep + path):
@@ -52,7 +57,7 @@ class Storage:
             details = {
                 'is_file': item_path.is_file(),
                 'type': item_type,
-                'name': path.rsplit('/', 1)[1],
+                'name': item_path.name,
                 'size': item_path.stat().st_size,
                 'mdate': datetime.fromtimestamp(item_path.stat().st_mtime),
                 'data': encoded_string,
@@ -77,7 +82,6 @@ class Storage:
         f.seek(0)
         f.write(content)
         f.close()
-
 
     def download_file(self, path):
         abs_path = self.base_path + os.sep + path
