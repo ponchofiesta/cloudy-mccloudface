@@ -118,22 +118,22 @@ def edit(request):
     if request.user.is_authenticated:
 
         path = request.GET.get('path', default='')
+        edit_path = request.GET.get('edit_path', default='')
 
         # Show file for editing
         if request.method == 'GET':
             storage = Storage(settings.STORAGE_BASE, request.user)
             params = Storage.get_path_params(path)
-            details = storage.get_file_details(path)
+            details = storage.get_file_details(edit_path)
             params['details'] = details
+            params['edit_path'] = edit_path
             return render(request, 'index/edit.html', params)
 
         # Save edited file
         elif request.method == 'POST':
             storage = Storage(settings.STORAGE_BASE, request.user)
             content = request.POST.get("filecontent", "")
-            storage.update_file(path, content)
-            params = Storage.get_path_params(path)
-            path = params['parents'][0]['path']
+            storage.update_file(edit_path, content)
             return redirect(reverse('index') + '?path=' + path)
 
     else:

@@ -21,7 +21,7 @@
         {% else %}
             <h2>Edit directory</h2>
         {% endif %}
-        <form class="ui form" method="post" enctype="multipart/form-data" action="{% url 'edit' %}?path={{ path }}">
+        <form class="ui form" method="post" enctype="multipart/form-data" action="{% url 'edit' %}?path={{ path }}&edit_path={{ edit_path }}">
             {% csrf_token %}
 
             {% if details.is_file %}

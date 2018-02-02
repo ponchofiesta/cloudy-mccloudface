@@ -87,7 +87,7 @@
                                         </a>
                                         {% if 'image' not in item.type or item.is_dir %}
                                             <a class="rename icon item"
-                                               href="{% url 'edit' %}?path={{ item.webpath }}">
+                                               href="{% url 'edit' %}?path={{ path }}&edit_path={{ item.webpath }}">
                                                 <i class="write icon" data-content="Rename"
                                                    data-position="bottom right"></i>
                                             </a>
