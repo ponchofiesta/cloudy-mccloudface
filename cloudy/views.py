@@ -35,11 +35,13 @@ def index(request):
         else:
             path = ''
         storage = Storage(settings.STORAGE_BASE, request.user)
-        items = storage.get_items(path)
+
         params = Storage.get_path_params(path)
         details = storage.get_file_details(path)
         params['details'] = details
-        params['items'] = items
+        if 'is_file' not in details or not details['is_file']:
+            items = storage.get_items(path)
+            params['items'] = items
         params['yesterday'] = datetime.now() - timedelta(1)
 
         return render(request, 'index/index.html', params)
