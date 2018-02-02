@@ -43,26 +43,32 @@ class Storage:
         return entries
 
     def get_file_details(self, path=''):
-        details = {}
-        if os.path.isfile(self.base_path + os.sep + path):
-            item_path = pathlib.Path(self.base_path + os.sep + path)
-            item_type = mimetypes.guess_type(path)[0]
-            with open((self.base_path + os.sep + path), "rb") as file:
-                encoded_string = base64.b64encode(file.read()).decode('ascii')
-            text = ''
-            if 'text' in item_type:
-                f = open(self.base_path + os.sep + path)
-                text = f.read()
-                f.close()
-            details = {
-                'is_file': item_path.is_file(),
-                'type': item_type,
-                'name': item_path.name,
-                'size': item_path.stat().st_size,
-                'mdate': datetime.fromtimestamp(item_path.stat().st_mtime),
-                'data': encoded_string,
-                'text': text
-            }
+        filepath = ''
+        if os.path.isfile(self.base_path):
+            filepath = self.base_path
+        elif os.path.isfile(self.base_path + os.sep + path):
+            filepath = self.base_path + os.sep + path
+        else:
+            return {}
+
+        item_path = pathlib.Path(filepath)
+        item_type = mimetypes.guess_type(filepath)[0]
+        with open((filepath), "rb") as file:
+            encoded_string = base64.b64encode(file.read()).decode('ascii')
+        text = ''
+        if 'text' in item_type:
+            f = open(filepath)
+            text = f.read()
+            f.close()
+        details = {
+            'is_file': item_path.is_file(),
+            'type': item_type,
+            'name': item_path.name,
+            'size': item_path.stat().st_size,
+            'mdate': datetime.fromtimestamp(item_path.stat().st_mtime),
+            'data': encoded_string,
+            'text': text
+        }
         return details
 
     def create_folder(self, path, foldername):
@@ -84,7 +90,13 @@ class Storage:
         f.close()
 
     def download_file(self, path):
-        abs_path = self.base_path + os.sep + path
+        abs_path = ''
+        if os.path.isfile(self.base_path):
+            abs_path = self.base_path
+        elif os.path.isfile(self.base_path + os.sep + path):
+            abs_path = self.base_path + os.sep + path
+        else:
+            raise Http404
         if os.path.exists(abs_path):
             with open(abs_path, 'rb') as fh:
                 response = HttpResponse(fh.read(), content_type=mimetypes.guess_type(abs_path))
