@@ -106,8 +106,9 @@ def delete(request):
 
         storage = Storage(settings.STORAGE_BASE, request.user)
         storage.delete_file(path)
-        parent_dir = path.rsplit('/', 1)[0]
-        return redirect(reverse('index') + '?path=' + parent_dir)
+        params = Storage.get_path_params(path)
+        path = params['parents'][0]['path']
+        return redirect(reverse('index') + '?path=' + path)
 
     else:
         return render(request, 'index/index.html')
@@ -131,6 +132,8 @@ def edit(request):
             storage = Storage(settings.STORAGE_BASE, request.user)
             content = request.POST.get("filecontent", "")
             storage.update_file(path, content)
+            params = Storage.get_path_params(path)
+            path = params['parents'][0]['path']
             return redirect(reverse('index') + '?path=' + path)
 
     else:
