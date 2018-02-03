@@ -122,20 +122,29 @@ def edit(request):
         path = request.GET.get('path', default='')
         edit_path = request.GET.get('edit_path', default='')
 
-        # Show file for editing
+        # Show for editing
         if request.method == 'GET':
             storage = Storage(settings.STORAGE_BASE, request.user)
             params = Storage.get_path_params(path)
             details = storage.get_file_details(edit_path)
             params['details'] = details
             params['edit_path'] = edit_path
+            params['item_name'] = edit_path.rsplit(os.sep, 1)[1]
             return render(request, 'index/edit.html', params)
 
         # Save edited file
         elif request.method == 'POST':
             storage = Storage(settings.STORAGE_BASE, request.user)
-            content = request.POST.get("filecontent", "")
-            storage.update_file(edit_path, content)
+            is_file = request.POST.get("item_type", "")
+            if is_file:
+                # File
+                name = request.POST.get("name", "")
+                content = request.POST.get("filecontent", "")
+                storage.update_file(edit_path, name, content)
+            else:
+                # Directory
+                foldername = request.POST.get("foldername", "")
+                storage.update_folder(edit_path, foldername)
             return redirect(reverse('index') + '?path=' + path)
 
     else:

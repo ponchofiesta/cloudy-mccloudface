@@ -26,14 +26,22 @@
 
             {% if details.is_file %}
                 <div class="field">
-                    <label>{{ details.name }}</label>
+                    <label>File name</label>
+                    <input type="text" name="name" value="{{ details.name }}"/>
+                </div>
+                <div class="field">
+                    <label>File content</label>
                     <textarea name="filecontent">{{ details.text }}</textarea>
                 </div>
 
             {% else %}
-                <p>Ist ein Verzeichnis</p>
+                <div class="field">
+                    <label>Directory name</label>
+                    <input type="text" name="foldername" value="{{ item_name }}"/>
+                </div>
             {% endif %}
 
+            <input type="hidden" value="{{ details.is_file }}" name="item_type"/>
             <button class="ui primary button" type="submit">Save</button>
             <a class="ui button" href="{% url 'index' %}?path={{ path }}">Cancel</a>
             <div class="ui error message"></div>

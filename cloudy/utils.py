@@ -76,18 +76,25 @@ class Storage:
         if not os.path.exists(abs_path):
             os.makedirs(abs_path)
 
+    def update_folder(self, path, foldername):
+        abs_path = self.base_path + os.sep + path
+        new_path = abs_path.rsplit(os.sep, 1)[0] + os.sep + foldername
+        os.rename(abs_path, new_path)
+
     def save_file(self, path, file):
         abs_path = self.base_path + os.sep + path + os.sep + file.name
         with open(abs_path, 'wb+') as destination:
             for chunk in file.chunks():
                 destination.write(chunk)
 
-    def update_file(self, path, content):
+    def update_file(self, path, name, content):
         abs_path = self.base_path + os.sep + path
         f = open(abs_path, 'r+')
         f.seek(0)
         f.write(content)
         f.close()
+        new_path = abs_path.rsplit(os.sep, 1)[0] + os.sep + name
+        os.rename(abs_path, new_path)
 
     def download_file(self, path):
         abs_path = ''
