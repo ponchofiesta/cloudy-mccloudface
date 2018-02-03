@@ -4,6 +4,20 @@
 
 {% block content %}
 
+    <style>
+        .editor-toolbar.fullscreen {
+            top: 50px;
+        }
+
+        .editor-preview-side {
+            top: 100px;
+        }
+
+        .CodeMirror-fullscreen {
+            top: 100px;
+        }
+    </style>
+
     <div class="ui vertical segment">
         <h1 class="ui header">
             Cloudy McCloudface
@@ -31,7 +45,7 @@
                 </div>
                 <div class="field">
                     <label>File content</label>
-                    <textarea name="filecontent">{{ details.text }}</textarea>
+                    <textarea name="filecontent" id="filecontent">{{ details.text }}</textarea>
                 </div>
 
             {% else %}
@@ -48,6 +62,13 @@
         </form>
 
     </div>
+
+    <script>
+        var simplemde = new SimpleMDE({
+            element: document.getElementById("filecontent"),
+            spellChecker: false
+        });
+    </script>
 
 
 {% endblock %}

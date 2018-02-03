@@ -15,6 +15,7 @@ db.sqlite3
 !/static/cloudy.css
 !/static/cloud.png
 !/static/cloud_space.png
+!/static/simplemde
 !/static/.gitkeep
 
 # storage

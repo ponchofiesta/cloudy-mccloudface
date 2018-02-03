@@ -90,7 +90,7 @@ class Storage:
     def update_file(self, path, name, content):
         abs_path = self.base_path + os.sep + path
         f = open(abs_path, 'r+')
-        f.seek(0)
+        f.truncate(0)
         f.write(content)
         f.close()
         new_path = abs_path.rsplit(os.sep, 1)[0] + os.sep + name
