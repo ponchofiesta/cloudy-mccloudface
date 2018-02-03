@@ -20,15 +20,18 @@
         <form class="ui form" method="post" enctype="multipart/form-data" action="{% url 'upload' %}?path={{ path }}">
             {% csrf_token %}
             <div class="fluid fields">
-                <div class="field">
+                <div class="inline field">
                     <label for="file" class="ui icon button">
                         <i class="file icon"></i>
                         Choose File
                     </label>
+                    <div class="ui red left pointing basic label" id="fileselect">
+                        No file selected!
+                    </div>
                     <input type="file" name="file" id="file" style="display:none">
                 </div>
             </div>
-            <button class="ui primary button" type="submit">Upload</button>
+            <button class="ui disabled primary button" type="submit" id="submit">Upload</button>
             <a class="ui button" href="{% url 'index' %}?path={{ path }}">Cancel</a>
             <div class="ui error message"></div>
         </form>
@@ -52,5 +55,15 @@
                 }
             })
         ;
+
+        // show name of selected file
+        $('input[type="file"]').change(function (e) {
+            var fileName = e.target.files[0].name;
+            $('#fileselect').removeClass('red');
+            $('#fileselect').addClass('green');
+            $('#fileselect').html('Selected file: ' + fileName);
+            $('#submit').removeClass('disabled');
+        });
+
     </script>
 {% endblock %}
