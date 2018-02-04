@@ -17,15 +17,28 @@
         }
 
         button i.icon {
-            margin: 0;
+            margin: 0 15px;
         }
 
         button a, button a:hover {
             color: white;
         }
 
+        .centered {
+            text-align: center;
+        }
+
         tr.details {
             cursor: pointer;
+        }
+
+        .ui.breadcrumb a {
+            color: #008080;
+        }
+
+        .ui.grid > .stretched.row > .column > .ui.fluid.label {
+            flex-grow: initial;
+            -webkit-box-flex: initial;
         }
     </style>
 
@@ -34,23 +47,9 @@
     <div class="ui equal width grid">
         <div class="stretched row">
             <div class="ten wide column">
-                <div class="ui two column grid">
-                    <div class="middle aligned thirteen wide column">
-                        {% include 'base/breadcrumb.html' %}
-                    </div>
-
-                    <div class="right floated three wide column">
-                        <div class="large teal ui buttons">
-                            <button class="ui icon button">
-                                <a href="{% url 'upload' %}?path={{ path }}"><i class="file icon"></i></a>
-                            </button>
-                            <button class="ui icon button">
-                                <a href="{% url 'newfolder' %}?path={{ path }}"><i class="folder open icon"></i></a>
-                            </button>
-                        </div>
-                    </div>
+                <div class="ui fluid label">
+                    {% include 'base/breadcrumb.html' %}
                 </div>
-
 
                 <div class="ui vertical segment">
                     <table class="ui very basic selectable table">
@@ -72,7 +71,7 @@
                                     {{ item.name }}
                                 </td>
                                 <td>
-                                    <div class="ui right floated icon menu">
+                                    <div class="ui right floated small icon menu">
                                         {% if not item.is_dir %}
                                             <a class="popup icon item"
                                                href="{% url 'download' %}?path={{ item.webpath }}">

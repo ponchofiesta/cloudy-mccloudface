@@ -1,5 +1,5 @@
 {% block breadcrumb %}
-<div class="ui large breadcrumb">
+    <div class="ui small breadcrumb">
     {% for folder in parents reversed %}
         {% if folder.name == '' %}
             <a href="{% if is_share %}{% url 'share' %}/{{ url_id }}{% else %}{% url 'index' %}{% endif %}?path=" class="section ">
