@@ -38,10 +38,9 @@ def index(request):
 
         params = Storage.get_path_params(path)
         details = storage.get_file_details(path)
+        items = storage.get_items(path)
         params['details'] = details
-        if 'is_file' not in details or not details['is_file']:
-            items = storage.get_items(path)
-            params['items'] = items
+        params['items'] = items
         params['yesterday'] = datetime.now() - timedelta(1)
 
         return render(request, 'index/index.html', params)

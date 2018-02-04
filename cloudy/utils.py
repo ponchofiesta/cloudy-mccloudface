@@ -25,8 +25,8 @@ class Storage:
 
     def get_items(self, path=''):
         if os.path.isfile(self.base_path + os.sep + path):
-            path = path.rsplit('/', 1)
-            path = path[0]
+            params = Storage.get_path_params(path)
+            path = params['parents'][0]['path']
         entries = []
         items = os.listdir(self.base_path + os.sep + path)
         for item in items:
