@@ -11,12 +11,8 @@
 db.sqlite3
 
 # static content
-/static/*
-!/static/cloudy.css
-!/static/cloud.png
-!/static/cloud_space.png
-!/static/simplemde
-!/static/.gitkeep
+/static/jquery
+/static/semantic
 
 # storage
 /storage/*
