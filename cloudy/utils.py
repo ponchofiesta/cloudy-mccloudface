@@ -27,6 +27,8 @@ class Storage:
         if os.path.isfile(self.base_path + os.sep + path):
             params = Storage.get_path_params(path)
             path = params['parents'][0]['path']
+            if path == os.sep:
+                path = ''
         entries = []
         items = os.listdir(self.base_path + os.sep + path)
         for item in items:
