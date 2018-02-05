@@ -1,5 +1,3 @@
-from datetime import timedelta, datetime
-
 import os
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -41,7 +39,6 @@ def index(request):
         items = storage.get_items(path)
         params['details'] = details
         params['items'] = items
-        params['yesterday'] = datetime.now() - timedelta(1)
 
         return render(request, 'index/index.html', params)
     else:
@@ -204,9 +201,22 @@ def share_view(request, url_id):
     params = Storage.get_path_params(path)
     params['details'] = details
     params['items'] = items
-    params['yesterday'] = datetime.now() - timedelta(1)
     params['is_share'] = True
     params['url_id'] = url_id
 
     return render(request, 'index/share_view.html', params)
 
+
+def search(request):
+    if request.user.is_authenticated:
+
+        path = request.GET.get('path', default='')
+        pattern = request.GET.get('pattern', default='')
+        storage = Storage(settings.STORAGE_BASE, request.user)
+        params = Storage.get_path_params(path)
+        params['items'] = storage.search(pattern)
+        params['pattern'] = pattern
+
+        return render(request, 'index/search.html', params)
+    else:
+        return render(request, 'index/index.html')

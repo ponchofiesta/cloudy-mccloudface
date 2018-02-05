@@ -134,3 +134,29 @@ class Storage:
             'path': path,
             'name': os.path.basename(path)
         }
+
+    def search(self, pattern):
+
+        found = []
+
+        def search_element(path, element, pattern, is_dir):
+            if pattern.lower() in element.lower():
+                dirname = os.path.dirname(os.path.join(path, element))
+                if dirname == '':
+                    dirname = os.sep
+                fullpath = os.path.join(dirname, element)
+                found.append({
+                    'path': dirname,
+                    'fullpath': fullpath,
+                    'name': os.path.basename(os.path.join(path, element)),
+                    'is_dir': is_dir
+                })
+
+        for root, dirs, files in os.walk(self.base_path):
+            path = root[len(self.base_path):]
+            for dir in dirs:
+                search_element(path, dir, pattern, True)
+            for file in files:
+                search_element(path, file, pattern, False)
+
+        return found

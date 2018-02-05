@@ -1,0 +1,49 @@
+{% extends "base/base_menu.html" %}
+
+{% load humanize %}
+
+{% block title %}Cloudy McCloudface{% endblock %}
+
+{% block content %}
+
+    <style>
+        .ten.wide.column {
+            padding-top: 20px !important;
+        }
+
+        .ui.breadcrumb a {
+            color: #008080;
+        }
+    </style>
+
+    {% include 'base/menu.html' %}
+
+    <div class="ui equal width grid">
+        <div class="stretched row">
+            <div class="ten wide column">
+
+                <h2>Search for '{{ pattern }}'</h2>
+
+                <div class="ui vertical segment">
+                    <div class="ui celled list">
+                        {% for item in items %}
+                            <a href="{% url 'index' %}?path={{ item.fullpath }}" class="item">
+                                {% if item.is_dir %}
+                                    <i class="folder icon"></i>
+                                {% else %}
+                                    <i class="file outline icon"></i>
+                                {% endif %}
+                                <div class="content">
+                                    <div class="header">{{ item.name }}</div>
+                                    <div class="description">{{ item.path }}</div>
+                                </div>
+                            </a>
+                        {% endfor %}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
