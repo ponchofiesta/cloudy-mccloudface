@@ -194,7 +194,7 @@ def share_view(request, url_id):
         return render(request, 'index/index.html')
 
     path = request.GET.get('path', default='')
-    storage = Storage(settings.STORAGE_BASE, request.user)
+    storage = Storage(settings.STORAGE_BASE, share.user)
     storage.set_base_path(storage.base_path + os.sep + share.path)
     details = storage.get_file_details(path)
     if 'is_file' in details and details['is_file']:

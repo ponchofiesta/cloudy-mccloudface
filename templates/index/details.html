@@ -27,6 +27,7 @@
         <span>{{ details.mdate|date:"D d M Y, H:s" }}</span>
     {% else %}
 
+        {% if user.is_authenticated %}
         <div class="centered">
             <div class="ui big teal buttons">
                 <a class="ui icon button" href="{% url 'upload' %}?path={{ path }}">
@@ -40,6 +41,7 @@
             <p></p>
             <p>Select a file from the list to show file details.</p>
         </div>
+        {% endif %}
 
     {% endif %}
 
