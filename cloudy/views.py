@@ -10,7 +10,13 @@ from cloudymccloudface import settings
 
 
 def signup(request):
+    """
+    Register a new user
+    :param request:
+    :return:
+    """
     if request.method == 'POST':
+        # do register the user
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
@@ -20,11 +26,17 @@ def signup(request):
             login(request, user)
             return redirect('/')
     else:
+        # show register form
         form = UserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
 
 
 def index(request):
+    """
+    Main page with files listing
+    :param request:
+    :return:
+    """
     if request.user.is_authenticated:
         if 'path' in request.GET:
             path = request.GET['path']
@@ -33,7 +45,6 @@ def index(request):
         else:
             path = ''
         storage = Storage(settings.STORAGE_BASE, request.user)
-
         params = Storage.get_path_params(path)
         details = storage.get_file_details(path)
         items = storage.get_items(path)
@@ -46,15 +57,22 @@ def index(request):
 
 
 def newfolder(request):
+    """
+    create a new folder
+    :param request:
+    :return:
+    """
     if request.user.is_authenticated:
 
         path = request.GET.get('path', default='')
 
         if request.method == 'GET':
+            # show form for folder creation
             params = Storage.get_path_params(path)
             return render(request, 'index/newfolder.html', params)
 
         elif request.method == 'POST':
+            # do create the folder
             foldername = request.POST.get('foldername', default='')
             if 'foldername' == '':
                 return redirect(reverse('index') + '?path=' + path)
@@ -68,15 +86,22 @@ def newfolder(request):
 
 
 def upload(request):
+    """
+    upload a file
+    :param request:
+    :return:
+    """
     if request.user.is_authenticated:
 
         path = request.GET.get('path', default='')
 
         if request.method == 'GET':
+            # show upload form
             params = Storage.get_path_params(path)
             return render(request, 'index/upload.html', params)
 
         elif request.method == 'POST':
+            # do save the file
             storage = Storage(settings.STORAGE_BASE, request.user)
             storage.save_file(path, request.FILES['file'])
             return redirect(reverse('index') + '?path=' + path)
@@ -86,6 +111,11 @@ def upload(request):
 
 
 def download(request):
+    """
+    download a file
+    :param request:
+    :return:
+    """
     if request.user.is_authenticated:
 
         path = request.GET.get('path', default='')
@@ -98,6 +128,11 @@ def download(request):
 
 
 def delete(request):
+    """
+    delete a file or directory
+    :param request:
+    :return:
+    """
     if request.user.is_authenticated:
 
         path = request.GET.get('path', default='')
@@ -113,6 +148,11 @@ def delete(request):
 
 
 def edit(request):
+    """
+    edit or rename a file or rename a directory
+    :param request:
+    :return:
+    """
     if request.user.is_authenticated:
 
         path = request.GET.get('path', default='')
@@ -148,15 +188,24 @@ def edit(request):
 
 
 def share(request):
+    """
+    share a file or directory
+    :param request:
+    :return:
+    """
     if request.user.is_authenticated:
         path = request.GET.get('path', default='')
         share_path = request.GET.get('share_path', default='')
+
+        # search for an existing share for this path
         share = Share.objects.filter(user=request.user, path=share_path)
         if len(share) > 0:
             share = share[0]
         else:
+            # create a new share
             share = Share.objects.create(user=request.user, path=share_path)
             share.save()
+
         params = Storage.get_path_params(path)
         params['share_path'] = share_path
         params['share_url'] = request.build_absolute_uri('/')[:-1] + reverse('share') + '/' + str(share.url_id)
@@ -168,10 +217,18 @@ def share(request):
 
 
 def share_delete(request, url_id):
+    """
+    delete a share
+    :param request:
+    :param url_id: unique UUID for the share
+    :return:
+    """
     if request.user.is_authenticated:
+        # search for the share
         share = Share.objects.filter(user=request.user, url_id=url_id)
         path = ''
         if len(share) > 0:
+            # get params and delete share
             share = share[0]
             params = Storage.get_path_params(share.path)
             path = params['parents'][0]['path']
@@ -183,6 +240,14 @@ def share_delete(request, url_id):
 
 
 def share_view(request, url_id):
+    """
+    show shared files and folders
+    :param request:
+    :param url_id: unique UUID for the share
+    :return:
+    """
+
+    # search for the share
     share = Share.objects.filter(url_id=url_id)
 
     if len(share) > 0:
@@ -192,9 +257,12 @@ def share_view(request, url_id):
 
     path = request.GET.get('path', default='')
     storage = Storage(settings.STORAGE_BASE, share.user)
+
+    # limit base_path to the shared folder/file
     storage.set_base_path(storage.base_path + os.sep + share.path)
     details = storage.get_file_details(path)
     if 'is_file' in details and details['is_file']:
+        # if it is a shared file just download it
         return storage.download_file(path)
 
     items = storage.get_items(path)
@@ -208,6 +276,11 @@ def share_view(request, url_id):
 
 
 def search(request):
+    """
+    search for files and directories
+    :param request:
+    :return:
+    """
     if request.user.is_authenticated:
 
         path = request.GET.get('path', default='')

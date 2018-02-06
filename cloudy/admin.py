@@ -4,10 +4,10 @@ from django.contrib.auth.models import User
 from cloudy.models import Profile, Share
 
 
-# Register your models here.
-
-
 class ProfileInline(admin.StackedInline):
+    """
+    Profile inline for User
+    """
     model = Profile
     can_delete = False
     verbose_name_plural = 'Profile'
@@ -15,6 +15,9 @@ class ProfileInline(admin.StackedInline):
 
 
 class CustomUserAdmin(UserAdmin):
+    """
+    inject Profile into User administration
+    """
     inlines = (ProfileInline,)
 
     def get_inline_instances(self, request, obj=None):
@@ -23,6 +26,7 @@ class CustomUserAdmin(UserAdmin):
         return super(CustomUserAdmin, self).get_inline_instances(request, obj)
 
 
+# enable models in admin panel
 admin.site.unregister(User)
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(Share)
